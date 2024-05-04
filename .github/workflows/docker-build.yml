@@ -1,0 +1,13 @@
+name: Docker-Build
+# On create pull request or push to the repository, the workflow will be triggered.
+on: [pull_request]
+# Check if the Dockerfile is correctly built.
+jobs:
+    build:
+        name: docker-build-app
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout repository
+              uses: actions/checkout@v4
+            - name: Build Docker image
+              run: docker build . --file .docker/Dockerfile -t fauto:$(date +%s)
