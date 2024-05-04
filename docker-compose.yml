@@ -1,0 +1,12 @@
+name: fauto
+
+services:
+  bun:
+    container_name: fauto-bot
+    build:
+      context: .
+      dockerfile: .docker/Dockerfile
+    command: bun run dev
+    volumes:
+      - .:/app
+      - /app/node_modules
