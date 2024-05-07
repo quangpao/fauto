@@ -36,7 +36,13 @@
       ],
       "@core/*": [
         "./core/*"
-      ]
+      ],
+      "@shared/*": [
+        "./shared/*"
+      ],
+      "@modules/*": [
+        "./modules/*"
+      ],
     }
   }
 }
