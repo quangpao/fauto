@@ -1,0 +1,72 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+/// API Key model for storing API keys
+model ApiKey {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  createdAt DateTime @default(now())
+  key       String   @unique
+  pageId    String   @unique
+  page      Page     @relation(fields: [pageId], references: [pageId])
+}
+
+/// Page model for storing page details
+model Page {
+  id           String  @id @default(auto()) @map("_id") @db.ObjectId
+  pageId       String  @unique
+  pageName     String
+  pageUsername String  @unique
+  ApiKey       ApiKey?
+  Post         Post[]
+}
+
+/// Post model for storing post details
+model Post {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  pageId    String
+  postId    String
+  postType  PostType @default(POST)
+  postUrl   String
+  page      Page     @relation(fields: [pageId], references: [pageId])
+}
+
+model ListenerChannel {
+  id          String      @id @default(auto()) @map("_id") @db.ObjectId
+  channelName String
+  channelId   String
+  channelType ChannelType @default(GuildText)
+  isActivated Boolean     @default(true)
+}
+
+enum PostType {
+  REEL
+  STORY
+  POST
+  VIDEO
+}
+
+enum ChannelType {
+  GuildText
+  DM
+  GuildVoice
+  GroupDM
+  GuildCategory
+  GuildAnnouncement
+  AnnouncementThread
+  PublicThread
+  PrivateThread
+}
