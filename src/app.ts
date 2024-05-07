@@ -1,3 +1,5 @@
-import { config } from "@config/config";
+import { FClient } from "@core/entities/client";
 
-console.log(config);
+const client = new FClient();
+
+await client.start();
