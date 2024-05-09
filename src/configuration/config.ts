@@ -8,4 +8,9 @@ export const config: Config = {
     tokenID: processVariables.TOKEN_ID,
     clientID: processVariables.CLIENT_ID,
   },
+  fbConfig: {
+    clientID: processVariables.FACEBOOK_CLIENT_ID,
+    secretID: processVariables.FACEBOOK_CLIENT_SECRET,
+    userID: processVariables.FACEBOOK_USER_ID,
+  },
 };
