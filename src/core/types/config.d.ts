@@ -7,8 +7,14 @@ export enum Environment {
 
 export interface Config {
   env: Environment;
+  fbConfig: FacebookConfig;
   discord: DiscordConfig;
-  fileSystem?: FileSystemConfig;
+}
+
+export interface FacebookConfig {
+  clientID: string;
+  secretID: string;
+  userID: string;
 }
 
 export interface DiscordConfig {
@@ -20,4 +26,7 @@ export interface ProcessVariables extends NodeJS.ProcessEnv {
   APP_ENV: Environment;
   TOKEN_ID: string;
   CLIENT_ID: string;
+  FACEBOOK_CLIENT_ID: string;
+  FACEBOOK_CLIENT_SECRET: string;
+  FACEBOOK_USER_ID: string;
 }
