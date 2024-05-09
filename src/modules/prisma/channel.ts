@@ -1,8 +1,7 @@
-import type { ListenerChannel } from "@prisma/client";
 import prisma from "@shared/db";
 
 export default class Channel {
-  public static async getAll(): Promise<ListenerChannel[]> {
+  public static async getAll() {
     return await prisma.listenerChannel.findMany();
   }
 
