@@ -1,5 +1,9 @@
 import { config } from "@config/config";
+import FApi from "@modules/facebook/api";
+import type { ApiKey } from "@prisma/client";
+import prisma from "@shared/db";
 import { logger } from "@shared/logger";
+import { isImgUrl } from "@shared/utils";
 import { Client, GatewayIntentBits } from "discord.js";
 
 export class FClient extends Client {
@@ -41,6 +45,22 @@ export class FClient extends Client {
       logger.info("[FEvents] Triggered |ready| event -- DONE");
     });
 
-    // this.on("messageCreate", async (message) => {});
+    this.on("messageCreate", async (message) => {
+      if (message.author.username !== "quangpao") return;
+      // let imageUrl;
+
+      // if (message.attachments.size > 0) {
+      //   if (message.attachments.first()?.contentType?.startsWith("image")) {
+      //     imageUrl = message.attachments.first()?.url;
+      //   }
+      // } else if (await isImgUrl(message.content)) {
+      //   imageUrl = message.content;
+      // }
+
+      // console.log(imageUrl);
+
+      const fApi = new FApi((await prisma.apiKey.findFirst()) as ApiKey);
+      console.log(await fApi.getPageFeed());
+    });
   }
 }
