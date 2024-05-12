@@ -1,6 +1,19 @@
-export type OauthAccessTokenParams = {
-  grant_type: string;
-  client_id: string;
-  client_secret: string;
-  fb_exchange_token: string;
+export type PostPhotoParam = {
+  url: string;
+  caption: string;
+  creator?: string;
+  published?: boolean;
+  scheduled_publish_time?: number;
+  unpublished_content_type?: UnpublishedContentType;
+  temporary?: boolean;
 };
+
+export const enum UnpublishedContentType {
+  SCHEDULED,
+  SCHEDULED_RECURRING,
+  DRAFT,
+  ADS_POST,
+  INLINE_CREATED,
+  PUBLISHED,
+  REVIEWABLE_BRANDED_CONTENT,
+}
