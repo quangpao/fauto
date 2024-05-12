@@ -37,7 +37,7 @@ model Post {
   id        String    @id @default(auto()) @map("_id") @db.ObjectId
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
-  postId    String
+  postId    String    @unique
   postUrl   String
   postType  PostType  @default(POST)
   message   String?
