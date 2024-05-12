@@ -2,7 +2,11 @@ import prisma from "@shared/db";
 
 export default class ApiKey {
   public static async getAll() {
-    return await prisma.apiKey.findMany();
+    return await prisma.apiKey.findMany({
+      include: {
+        page: true,
+      },
+    });
   }
 
   public static async getOne(pageId: string) {
