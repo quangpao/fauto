@@ -44,4 +44,17 @@ export default class Post {
       },
     });
   }
+
+  public static async getLatestByUsername(pageUsername: string) {
+    return await prisma.post.findFirst({
+      where: {
+        page: {
+          pageUsername: pageUsername,
+        },
+      },
+      orderBy: {
+        scheduled: "desc",
+      },
+    });
+  }
 }

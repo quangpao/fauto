@@ -34,16 +34,16 @@ model Page {
 
 /// Post model for storing post details
 model Post {
-  id        String    @id @default(auto()) @map("_id") @db.ObjectId
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
-  postId    String    @unique
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  postId    String   @unique
   postUrl   String
-  postType  PostType  @default(POST)
+  postType  PostType @default(POST)
   message   String?
-  scheduled DateTime? @default(now())
+  scheduled BigInt   @default(0)
   pageId    String
-  page      Page      @relation(fields: [pageId], references: [pageId])
+  page      Page     @relation(fields: [pageId], references: [pageId])
 }
 
 model ListenerChannel {

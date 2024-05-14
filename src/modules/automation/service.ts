@@ -1,22 +1,23 @@
 import FApi from "@modules/facebook/api";
 import ApiKey from "@modules/prisma/apikey";
 import { isImgUrl } from "@shared/utils";
-import type { Message } from "discord.js";
-import { InputConfirmEmbed } from "./builder/embed";
-import { ScheduleRow } from "./builder/button";
+import { Collection, type Message } from "discord.js";
+import { PostPreviewEmbed } from "./builder/embed";
+import { PageSelectMenuRow } from "./builder";
+import type { Page } from "@prisma/client";
 
 export default class AutoService {
-  private fApis: FApi[] = [];
+  public fApis: Collection<string, FApi> = new Collection<string, FApi>();
+  private pages: Page[] = [];
 
   public async init() {
     const apiKeys = await ApiKey.getAll();
-    const fApis: FApi[] = [];
 
     for (const apiKey of apiKeys) {
       const fApi = new FApi(apiKey);
-      fApis.push(fApi);
+      this.fApis.set(fApi.page.pageId, fApi);
+      this.pages.push(apiKey.page);
     }
-    this.fApis = fApis;
   }
 
   public async verifyInput(message: Message<boolean>) {
@@ -26,12 +27,16 @@ export default class AutoService {
         content: "Your input is invalid, please try again!",
       });
 
-    const embed = InputConfirmEmbed(type, url);
+    const embed = PostPreviewEmbed({
+      title: "[FAuto] Post has been created",
+      description: "Please choose the next action",
+      type,
+      url,
+    });
 
-    message.reply({
-      content: `Your ${type} post has been created`,
+    return await message.reply({
       embeds: [embed],
-      components: [ScheduleRow],
+      components: [PageSelectMenuRow(this.pages)],
     });
   }
 

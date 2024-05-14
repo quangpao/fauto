@@ -1,4 +1,9 @@
-import type { ButtonInteraction, Interaction } from "discord.js";
+import type {
+  AnySelectMenuInteraction,
+  ButtonInteraction,
+  Interaction,
+  ModalSubmitInteraction,
+} from "discord.js";
 import type { FClient } from "./client";
 
 export class FInteraction {
@@ -6,12 +11,41 @@ export class FInteraction {
     if (interaction.isButton()) {
       this.execButtonInteraction(client, interaction);
     }
+    if (interaction.isModalSubmit()) {
+      this.execModalSubmitInteraction(client, interaction);
+    }
+    if (interaction.isAnySelectMenu()) {
+      this.execSelectMenuInteraction(client, interaction);
+    }
   }
 
   private static async execButtonInteraction(
     client: FClient,
     interaction: ButtonInteraction,
   ) {
-    console.log(interaction.message.embeds);
+    const button = client.commands.button.get(interaction.customId);
+    if (!button) return;
+
+    await button.execute(interaction, client);
+  }
+
+  private static async execModalSubmitInteraction(
+    client: FClient,
+    interaction: ModalSubmitInteraction,
+  ) {
+    const modalSubmit = client.commands.modal.get(interaction.customId);
+    if (!modalSubmit) return;
+
+    await modalSubmit.execute(interaction, client);
+  }
+
+  private static async execSelectMenuInteraction(
+    client: FClient,
+    interaction: AnySelectMenuInteraction,
+  ) {
+    const selectMenu = client.commands.menu.get(interaction.customId);
+    if (!selectMenu) return;
+
+    await selectMenu.execute(interaction, client);
   }
 }
