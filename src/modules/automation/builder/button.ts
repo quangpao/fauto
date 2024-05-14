@@ -1,21 +1,21 @@
-import {
-  ActionRowBuilder,
-  ButtonBuilder,
-  ButtonStyle,
-  type MessageActionRowComponentBuilder as M,
-} from "discord.js";
+import { ButtonBuilder, ButtonStyle } from "discord.js";
 
-const post = new ButtonBuilder()
+export const PostButton = new ButtonBuilder()
   .setCustomId("postButton")
   .setLabel("Post Now")
   .setStyle(ButtonStyle.Success);
 
-const schedule = new ButtonBuilder()
+export const ScheduleButton = new ButtonBuilder()
   .setCustomId("scheduleButton")
   .setLabel("Schedule")
   .setStyle(ButtonStyle.Primary);
 
-export const ScheduleRow = new ActionRowBuilder<M>().addComponents(
-  post,
-  schedule,
-);
+export const AddCaptionButton = new ButtonBuilder()
+  .setCustomId("addCaptionButton")
+  .setLabel("Add Caption")
+  .setStyle(ButtonStyle.Success);
+
+export const SkipCaptionButton = new ButtonBuilder()
+  .setCustomId("skipCaptionButton")
+  .setLabel("Skip Caption")
+  .setStyle(ButtonStyle.Danger);
