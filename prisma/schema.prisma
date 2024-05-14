@@ -39,9 +39,9 @@ model Post {
   updatedAt DateTime @updatedAt
   postId    String   @unique
   postUrl   String
-  postType  PostType @default(POST)
+  postType  PostType @default(PHOTO)
   message   String?
-  scheduled BigInt   @default(0)
+  scheduled Int      @default(0)
   pageId    String
   page      Page     @relation(fields: [pageId], references: [pageId])
 }
@@ -55,9 +55,10 @@ model ListenerChannel {
 }
 
 enum PostType {
+  PHOTO
   REEL
   STORY
-  POST
+  FEED
   VIDEO
 }
 

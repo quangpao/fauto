@@ -1,11 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import type { Page } from "@prisma/client";
+import type { Page, PostType } from "@prisma/client";
 import type { Colors } from "./constant";
 
 export type PostPreviewEmbedType = {
   title: string;
   description: string;
-  type: string;
+  type: PostType | string;
   url: string;
 };
 
@@ -16,6 +16,15 @@ export type UpdatePostPreviewEmbedType = {
   caption?: string;
   time?: string;
   color?: Colors;
+};
+
+export type PostImageType = {
+  pageId: string;
+  url: string;
+  caption: string;
+  published: boolean;
+  postType: PostType;
+  scheduledPublishTime: number;
 };
 
 export function isPostPreviewEmbedType(p: any): p is PostPreviewEmbedType {
