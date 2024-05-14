@@ -21,12 +21,10 @@ export const photoParams = {
 };
 
 export const postPhotoParams = (params: PostPhotoParam) => {
-  const caption = `${params.caption}\nCre: ${params.creator || "Internet"}\n———————————\n#vtmeyes`;
-
-  if (params.published) {
+  if (!params.published) {
     return {
       url: params.url,
-      caption: caption,
+      caption: params.caption,
       published: params.published,
       scheduled_publish_time: params.scheduled_publish_time,
       unpublished_content_type: params.unpublished_content_type,
@@ -35,6 +33,6 @@ export const postPhotoParams = (params: PostPhotoParam) => {
 
   return {
     url: params.url,
-    caption: caption,
+    caption: params.caption,
   };
 };

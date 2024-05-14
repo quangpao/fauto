@@ -5,7 +5,9 @@ import {
   isUpdatePostPreviewEmbedType,
   type PostPreviewEmbedType,
   type UpdatePostPreviewEmbedType,
-} from "@modules/automation/param";
+} from "@modules/automation/type";
+import type { Post } from "@prisma/client";
+import { DateTime } from "luxon";
 
 export const PostPreviewEmbed = (
   params: PostPreviewEmbedType | UpdatePostPreviewEmbedType,
@@ -18,7 +20,7 @@ export const PostPreviewEmbed = (
       .setDescription(params.description)
       .setImage(params.url)
       .setFields({
-        name: "Post Type:",
+        name: "postType",
         value: params.type,
         inline: true,
       });
@@ -30,20 +32,39 @@ export const PostPreviewEmbed = (
 
     if (params.page) {
       embed.addFields({
-        name: "Page:",
+        name: "page",
         value: params.page.pageName,
         inline: true,
       });
-      embed.addFields({ name: "Id:", value: params.page.pageId, inline: true });
+      embed.addFields({ name: "id", value: params.page.pageId, inline: true });
     }
 
     if (params.caption) {
-      embed.addFields({ name: "Caption:", value: params.caption });
+      embed.addFields({ name: "caption", value: params.caption });
     }
     if (params.time) {
-      embed.addFields({ name: "Timestamp:", value: params.time });
+      embed.addFields({ name: "timestamp", value: params.time });
     }
 
     return embed;
   } else throw new Error("[PostPreviewEmbed] Invalid Parameter");
 };
+
+export const PostDoneEmbed = (post: Post, url: string) =>
+  new EmbedBuilder()
+    .setTitle("[FAuto] Post has been published/scheduled")
+    .setColor(Colors.Submit)
+    .setImage(url)
+    .setTimestamp()
+    .addFields(
+      {
+        name: "Link:",
+        value: post.postUrl,
+      },
+      {
+        name: "Schedule:",
+        value: DateTime.fromSeconds(post.scheduled)
+          .setZone("UTC+7")
+          .toFormat("HH:mm (EEEE, LLL) (Z)"),
+      },
+    );

@@ -7,11 +7,12 @@ import { DateTime } from "luxon";
 const TJ = 60 * 60 * 4; //4 Hours
 const TZ = "UTC+7";
 
-export const ScheduleSelectMenu = (lastTimestamp: number) => {
+export const ScheduleSelectMenu = (lastTimestamp?: number) => {
   const selectMenu = new StringSelectMenuBuilder()
     .setCustomId("scheduleSelectMenu")
     .setPlaceholder("Choose a timestamp!");
 
+  if (!lastTimestamp) return selectMenu;
   for (let i = 1; i <= 10; i++) {
     const dateTime = DateTime.fromSeconds(lastTimestamp + i * TJ)
       .setZone(TZ)

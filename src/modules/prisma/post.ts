@@ -1,5 +1,5 @@
-import type { Post as PostSchema } from "@prisma/client";
 import prisma from "@shared/db";
+import type { PostSchema } from "./type";
 
 export default class Post {
   public static async getAll() {
