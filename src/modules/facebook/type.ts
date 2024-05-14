@@ -1,7 +1,6 @@
 export type PostPhotoParam = {
   url: string;
   caption: string;
-  creator?: string;
   published?: boolean;
   scheduled_publish_time?: number;
   unpublished_content_type?: UnpublishedContentType;

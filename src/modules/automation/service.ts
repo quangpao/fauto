@@ -4,7 +4,9 @@ import { isImgUrl } from "@shared/utils";
 import { Collection, type Message } from "discord.js";
 import { PostPreviewEmbed } from "./builder/embed";
 import { PageSelectMenuRow } from "./builder";
-import type { Page } from "@prisma/client";
+import { PostType, type Page } from "@prisma/client";
+import type { PostImageType } from "./type";
+import Post from "@modules/prisma/post";
 
 export default class AutoService {
   public fApis: Collection<string, FApi> = new Collection<string, FApi>();
@@ -40,6 +42,28 @@ export default class AutoService {
     });
   }
 
+  public async postImage(params: PostImageType) {
+    const fApi = this.fApis.get(params.pageId);
+    if (!fApi) throw new Error("[AutoService] Cannot get API of the page");
+
+    const postResponse = await fApi.postPhoto({
+      url: params.url,
+      caption: params.caption,
+      published: params.published,
+      scheduled_publish_time: params.scheduledPublishTime,
+    });
+    const getResponse = await fApi.getPhoto(postResponse.id);
+
+    return await Post.create({
+      postId: getResponse.id,
+      postUrl: getResponse.link,
+      message: params.caption,
+      postType: params.postType,
+      scheduled: params.scheduledPublishTime,
+      pageId: params.pageId,
+    });
+  }
+
   private async decryptInput(message: Message<boolean>) {
     const [type, url] = await this.checkImage(message);
     if (!url) return [];
@@ -57,6 +81,6 @@ export default class AutoService {
       url = message.content;
     }
 
-    return ["image", url];
+    return [PostType.PHOTO, url];
   }
 }

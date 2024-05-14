@@ -1,3 +1,6 @@
+import type { Map } from "@core/types";
+import type { Embed } from "discord.js";
+
 export async function isImgUrl(url: string) {
   if (!isUrl(url)) {
     return false;
@@ -13,4 +16,15 @@ export function isUrl(url: string) {
   } catch {
     return false;
   }
+}
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export function extractEmbed(embed: Embed): any {
+  const extractedEmbed: Map = {};
+
+  for (const field of embed.fields) {
+    extractedEmbed[field.name] = field.value;
+  }
+
+  return extractedEmbed;
 }
