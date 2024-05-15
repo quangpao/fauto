@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import type {
   AnySelectMenuInteraction,
   ButtonInteraction,
@@ -5,17 +6,28 @@ import type {
   ModalSubmitInteraction,
 } from "discord.js";
 import type { FClient } from "./client";
+import { logger } from "@shared/logger";
 
 export class FInteraction {
   static async execute(client: FClient, interaction: Interaction) {
-    if (interaction.isButton()) {
-      this.execButtonInteraction(client, interaction);
-    }
-    if (interaction.isModalSubmit()) {
-      this.execModalSubmitInteraction(client, interaction);
-    }
-    if (interaction.isAnySelectMenu()) {
-      this.execSelectMenuInteraction(client, interaction);
+    try {
+      if (interaction.isButton()) {
+        this.execButtonInteraction(client, interaction);
+      }
+      if (interaction.isModalSubmit()) {
+        this.execModalSubmitInteraction(client, interaction);
+      }
+      if (interaction.isAnySelectMenu()) {
+        this.execSelectMenuInteraction(client, interaction);
+      }
+    } catch (error: any) {
+      logger.error(error);
+      if (interaction.isRepliable())
+        interaction.reply({
+          content: error.message,
+          embeds: [],
+          components: [],
+        });
     }
   }
 
