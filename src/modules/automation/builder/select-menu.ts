@@ -26,8 +26,6 @@ export const ScheduleSelectMenu = (lastTimestamp?: number) => {
     );
   }
 
-  selectMenu.options[0].setDefault(true);
-
   return selectMenu;
 };
 
