@@ -65,7 +65,11 @@ export class FClient extends Client {
   private messageCreate() {
     this.on("messageCreate", async (message) => {
       if (message.channelId !== "1237779304738193470") return;
-      if (message.author.id !== "283502903958700032") return;
+      if (
+        message.author.id !== "283502903958700032" &&
+        message.author.id !== "539420179122094082"
+      )
+        return;
 
       await this.autoService.verifyInput(message);
       logger.info("[FEvents] Triggered |messageCreate| event");
