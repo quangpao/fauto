@@ -1,12 +1,12 @@
 import type { ButtonCommand } from "@core/types";
 import {
-  AddCaptionButton,
   PostPreviewEmbed,
   ScheduleRow,
+  SkipCaptionButton,
 } from "@modules/automation/builder";
 
 export const command: ButtonCommand = {
-  builder: AddCaptionButton,
+  builder: SkipCaptionButton,
   async execute(interaction) {
     const oldEmbed = interaction.message?.embeds[0];
 
