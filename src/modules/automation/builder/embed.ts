@@ -8,7 +8,7 @@ import {
 } from "@modules/automation/type";
 import type { Post } from "@prisma/client";
 import { DateTime } from "luxon";
-import { DATE_FORMAT, TZ } from "@core/constants";
+import { DATE_FORMAT, LOCALE, TZ } from "@core/constants";
 
 export const PostPreviewEmbed = (
   params: PostPreviewEmbedType | UpdatePostPreviewEmbedType,
@@ -66,7 +66,12 @@ export const PostDoneEmbed = (post: Post, url: string) =>
         name: "Schedule:",
         value: DateTime.fromSeconds(post.scheduled)
           .setZone(TZ)
+          .setLocale(LOCALE)
           .toFormat(DATE_FORMAT),
+      },
+      {
+        name: "Caption:",
+        value: post.message || "",
       },
     );
 
