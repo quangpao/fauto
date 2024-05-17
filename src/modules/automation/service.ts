@@ -1,12 +1,14 @@
 import FApi from "@modules/facebook/api";
 import ApiKey from "@modules/prisma/apikey";
-import { isImgUrl } from "@shared/utils";
-import { Collection, type Message } from "discord.js";
+import { getMetadata } from "@shared/utils";
+import { AttachmentBuilder, Collection, type Message } from "discord.js";
 import { PostPreviewEmbed } from "./builder/embed";
 import { PageSelectMenuRow } from "./builder";
 import { PostType, type Page } from "@prisma/client";
 import type { PostImageType } from "./type";
 import Post from "@modules/prisma/post";
+import got from "got";
+import sharp from "sharp";
 
 export default class AutoService {
   public fApis: Collection<string, FApi> = new Collection<string, FApi>();
@@ -73,15 +75,28 @@ export default class AutoService {
 
   private async checkImage(message: Message<boolean>) {
     let url;
-    if (
-      message.attachments.size > 0 &&
-      (message.attachments.first()?.size || 0) / 1024 / 1024 < 10
-    ) {
-      if (message.attachments.first()?.contentType?.startsWith("image")) {
-        url = message.attachments.first()?.url;
-      }
-    } else if (await isImgUrl(message.content)) {
-      url = message.content;
+    const imageMetadata = (
+      await getMetadata(message.content)
+    )?.contentType?.startsWith("image")
+      ? await getMetadata(message.content)
+      : message.attachments.first()?.contentType?.startsWith("image")
+        ? message.attachments.first()
+        : null;
+
+    if (!imageMetadata) return [];
+    url = imageMetadata.url;
+
+    if ((imageMetadata.size || 0) / 1024 / 1024 > 10) {
+      if (imageMetadata.contentType?.includes("png")) {
+        let imageBuffer = await got(url).buffer();
+        imageBuffer = await sharp(imageBuffer).toFormat("jpg").toBuffer();
+        const newMessage = await message.channel.send({
+          content: "Your image has been modified for better performance.",
+          files: [new AttachmentBuilder(imageBuffer)],
+        });
+        await message.delete();
+        url = newMessage.attachments.first()?.url;
+      } else url = null;
     }
 
     return [PostType.PHOTO, url];
