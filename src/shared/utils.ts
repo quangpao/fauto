@@ -1,12 +1,17 @@
 import type { Map } from "@core/types";
 import type { Embed } from "discord.js";
 
-export async function isImgUrl(url: string) {
+export async function getMetadata(url: string) {
   if (!isUrl(url)) {
-    return false;
+    return;
   }
   const response = await fetch(url, { method: "HEAD" });
-  return response.headers.get("Content-Type")?.startsWith("image");
+
+  return {
+    contentType: response.headers.get("Content-Type"),
+    size: +(response.headers.get("Content-Length") || 0),
+    url: url,
+  };
 }
 
 export function isUrl(url: string) {
