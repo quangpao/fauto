@@ -1,5 +1,5 @@
 import { ModalBuilder } from "discord.js";
-import { CaptionActionRow, CreditActionRow } from "./action_row";
+import { CaptionActionRow, CreditActionRow } from ".";
 
 export const PostImageModal = new ModalBuilder()
   .setCustomId("postImageModal")

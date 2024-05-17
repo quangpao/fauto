@@ -1,5 +1,4 @@
 import type { FClient } from "@core/entities/client";
-import type { ButtonBuilder } from "@discordjs/builders";
 import type {
   AnySelectMenuInteraction,
   ButtonInteraction,
@@ -10,6 +9,8 @@ import type {
   ModalSubmitInteraction,
   StringSelectMenuBuilder,
   StringSelectMenuInteraction,
+  SlashCommandBuilder,
+  ButtonBuilder,
 } from "discord.js";
 
 interface Command {

@@ -6,6 +6,7 @@ import { readdirSync, existsSync } from "node:fs";
  * Load button commands to `this.client.commands.button` Collection
  */
 export default async (client: FClient) => {
+  logger.info("[FAuto] Loading button commands...");
   const folders = readdirSync("./src/modules", { withFileTypes: true }).filter(
     (folder) => folder.isDirectory(),
   );
