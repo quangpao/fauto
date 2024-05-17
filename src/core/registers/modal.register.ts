@@ -6,6 +6,7 @@ import { readdirSync, existsSync } from "node:fs";
  * Load modal commands to `this.client.commands.modal` Collection
  */
 export default async (client: FClient) => {
+  logger.info("[FAuto] Loading modal commands...");
   const folders = readdirSync("./src/modules", { withFileTypes: true }).filter(
     (folder) => folder.isDirectory(),
   );

@@ -27,6 +27,21 @@ export type PostImageType = {
   scheduledPublishTime: number;
 };
 
+export const enum AdminOption {
+  None = "0x000",
+  Channel = "0x001",
+  User = "0x002",
+  Page = "0x003",
+}
+
+export const enum AdminAction {
+  None = "1x000",
+  Create = "1x001",
+  Update = "1x002",
+  Delete = "1x003",
+  List = "1x004",
+}
+
 export function isPostPreviewEmbedType(p: any): p is PostPreviewEmbedType {
   return (
     typeof p === "object" &&

@@ -6,6 +6,7 @@ import { readdirSync, existsSync } from "node:fs";
  * Load select menu commands to `this.client.commands.menu` Collection
  */
 export default async (client: FClient) => {
+  logger.info("[FAuto] Loading menu select commands...");
   const folders = readdirSync("./src/modules", { withFileTypes: true }).filter(
     (folder) => folder.isDirectory(),
   );

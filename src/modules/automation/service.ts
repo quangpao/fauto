@@ -73,7 +73,10 @@ export default class AutoService {
 
   private async checkImage(message: Message<boolean>) {
     let url;
-    if (message.attachments.size > 0) {
+    if (
+      message.attachments.size > 0 &&
+      (message.attachments.first()?.size || 0) / 1024 / 1024 < 10
+    ) {
       if (message.attachments.first()?.contentType?.startsWith("image")) {
         url = message.attachments.first()?.url;
       }

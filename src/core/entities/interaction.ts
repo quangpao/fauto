@@ -2,6 +2,7 @@
 import type {
   AnySelectMenuInteraction,
   ButtonInteraction,
+  ChatInputCommandInteraction,
   Interaction,
   ModalSubmitInteraction,
 } from "discord.js";
@@ -19,6 +20,9 @@ export class FInteraction {
       }
       if (interaction.isAnySelectMenu()) {
         this.execSelectMenuInteraction(client, interaction);
+      }
+      if (interaction.isChatInputCommand()) {
+        this.execChatInputInteraction(client, interaction);
       }
     } catch (error: any) {
       logger.error(error);
@@ -59,5 +63,15 @@ export class FInteraction {
     if (!selectMenu) return;
 
     await selectMenu.execute(interaction, client);
+  }
+
+  private static async execChatInputInteraction(
+    client: FClient,
+    interaction: ChatInputCommandInteraction,
+  ) {
+    const slash = client.commands.slash.get(interaction.commandName);
+    if (!slash) return;
+
+    await slash.execute(interaction, client);
   }
 }
