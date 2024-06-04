@@ -1,10 +1,18 @@
 import type { SlashCommand } from "@core/types";
 import {
+  AdminActionSelectMenuRow,
   AdminOptionSelectMenuRow,
   AdminSettingsEmbed,
   FAutoSlashBuilder,
 } from "@modules/automation/builder";
-import { AdminOption } from "@modules/automation/type";
+import {
+  AdminAction,
+  AdminOption,
+  isAdminAction,
+  isAdminOption,
+} from "@modules/automation/type";
+import { ComponentType, StringSelectMenuInteraction } from "discord.js";
+import { FAutoSelect } from "../menu/fauto-select";
 
 export const command: SlashCommand = {
   builder: FAutoSlashBuilder,
@@ -15,9 +23,48 @@ export const command: SlashCommand = {
         ephemeral: true,
       });
 
-    return await interaction.reply({
+    const CollectOption = {
+      option: AdminOption.None,
+      action: AdminAction.None,
+      interaction: null as unknown as StringSelectMenuInteraction,
+    };
+
+    const response = await interaction.reply({
       embeds: [AdminSettingsEmbed],
-      components: [AdminOptionSelectMenuRow(AdminOption.None)],
+      components: [AdminOptionSelectMenuRow(CollectOption.option)],
+    });
+
+    const collector = response.createMessageComponentCollector({
+      componentType: ComponentType.StringSelect,
+      filter: (i) => i.user.id === interaction.user.id,
+      max: 2,
+      time: 60_000,
+    });
+
+    collector.on("collect", async (i) => {
+      if (isAdminOption(i.values[0])) {
+        CollectOption.option = i.values[0];
+        await i.update({
+          components: [
+            AdminOptionSelectMenuRow(CollectOption.option),
+            AdminActionSelectMenuRow(CollectOption.action),
+          ],
+        });
+      } else if (isAdminAction(i.values[0])) {
+        CollectOption.action = i.values[0];
+        CollectOption.interaction = i;
+      }
+    });
+    collector.on("end", async () => {
+      if (
+        CollectOption.action === AdminAction.None ||
+        CollectOption.option === AdminOption.None
+      ) {
+        await interaction.editReply({ components: [] });
+        return;
+      }
+      await FAutoSelect.handle(CollectOption);
+      console.log(CollectOption);
     });
   },
 };

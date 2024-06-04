@@ -50,6 +50,7 @@ export const AdminOptionSelectMenu = (currentOption: AdminOption) => {
   const selectMenu = new StringSelectMenuBuilder()
     .setCustomId("adminOptionSelectMenu")
     .setPlaceholder("Choose an option!")
+    .setDisabled(currentOption !== AdminOption.None)
     .addOptions(
       new StringSelectMenuOptionBuilder()
         .setLabel("⇀ 𝐅𝐂𝐡𝐚𝐧𝐧𝐞𝐥 ↽")
@@ -75,36 +76,32 @@ export const AdminOptionSelectMenu = (currentOption: AdminOption) => {
 export const AdminActionSelectMenu = (currentAction: AdminAction) => {
   const selectMenu = new StringSelectMenuBuilder()
     .setCustomId("adminActionSelectMenu")
-    .setPlaceholder("Choose an action!");
-
-  if (currentAction !== AdminAction.Create) {
-    selectMenu.addOptions(
+    .setPlaceholder("Choose an action!")
+    .setDisabled(currentAction !== AdminAction.None)
+    .addOptions(
       new StringSelectMenuOptionBuilder()
         .setLabel("⇀ 𝐂𝐫𝐞𝐚𝐭𝐞 ↽")
-        .setValue(AdminAction.Create),
-    );
-  }
-  if (currentAction !== AdminAction.Update) {
-    selectMenu.addOptions(
+        .setValue(AdminAction.Create)
+        .setDefault(currentAction === AdminAction.Create),
+    )
+    .addOptions(
       new StringSelectMenuOptionBuilder()
         .setLabel("⇀ 𝐔𝐩𝐝𝐚𝐭𝐞 ↽")
-        .setValue(AdminAction.Update),
-    );
-  }
-  if (currentAction !== AdminAction.Delete) {
-    selectMenu.addOptions(
+        .setValue(AdminAction.Update)
+        .setDefault(currentAction === AdminAction.Update),
+    )
+    .addOptions(
       new StringSelectMenuOptionBuilder()
         .setLabel("⇀ 𝐃𝐞𝐥𝐞𝐭𝐞 ↽")
-        .setValue(AdminAction.Delete),
-    );
-  }
-  if (currentAction !== AdminAction.List) {
-    selectMenu.addOptions(
+        .setValue(AdminAction.Delete)
+        .setDefault(currentAction === AdminAction.Delete),
+    )
+    .addOptions(
       new StringSelectMenuOptionBuilder()
         .setLabel("⇀ 𝐋𝐢𝐬𝐭 ↽")
-        .setValue(AdminAction.List),
+        .setValue(AdminAction.List)
+        .setDefault(currentAction === AdminAction.List),
     );
-  }
 
   return selectMenu;
 };

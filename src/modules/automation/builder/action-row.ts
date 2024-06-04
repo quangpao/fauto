@@ -9,7 +9,14 @@ import {
   ScheduleButton,
   SkipCaptionButton,
 } from "./button";
-import { CaptionTxtInput, CreditTxtInput } from "./text-input";
+import {
+  CaptionTxtInput,
+  CreditTxtInput,
+  PageApiKeyTxtInput,
+  PageIdTxtInput,
+  PageNameTxtInput,
+  PageUsernameTxtInput,
+} from "./text-input";
 import {
   AdminActionSelectMenu,
   AdminOptionSelectMenu,
@@ -54,4 +61,17 @@ export const CaptionActionRow = new ActionRowBuilder<Mo>().addComponents(
 );
 export const CreditActionRow = new ActionRowBuilder<Mo>().addComponents(
   CreditTxtInput,
+);
+
+export const PageIdActionRow = new ActionRowBuilder<Mo>().addComponents(
+  PageIdTxtInput,
+);
+export const PageNameActionRow = new ActionRowBuilder<Mo>().addComponents(
+  PageNameTxtInput,
+);
+export const PageUsernameActionRow = new ActionRowBuilder<Mo>().addComponents(
+  PageUsernameTxtInput,
+);
+export const PageApiKeyActionRow = new ActionRowBuilder<Mo>().addComponents(
+  PageApiKeyTxtInput,
 );
