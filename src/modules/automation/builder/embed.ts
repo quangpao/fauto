@@ -9,6 +9,7 @@ import {
 import type { Post } from "@prisma/client";
 import { DateTime } from "luxon";
 import { AuthorOptions, DATE_FORMAT, LOCALE, TZ } from "@core/constants";
+import type { PageInfoResponse } from "@modules/facebook/type";
 
 export const PostPreviewEmbed = (
   params: PostPreviewEmbedType | UpdatePostPreviewEmbedType,
@@ -96,3 +97,40 @@ export const AdminSettingsEmbed = new EmbedBuilder()
       inline: false,
     },
   );
+
+export const PageInfoEmbed = (info: PageInfoResponse) =>
+  new EmbedBuilder()
+    .setAuthor(AuthorOptions)
+    .setTitle(`[F-Auto] Page Information`)
+    .setColor(Colors.Preview)
+    .setURL(info.link)
+    .addFields(
+      {
+        name: "⥼Page ID⥽",
+        value: `⤷ ${info.id}`,
+        inline: true,
+      },
+      {
+        name: "⥼Page Username⥽",
+        value: `⤷ ${info.username || "Not set"}`,
+        inline: true,
+      },
+      {
+        name: "✧ Page Name:",
+        value: `⤷ ${info.name}`,
+      },
+      {
+        name: "✧ Page Link:",
+        value: `⤷ ${info.link}`,
+      },
+      {
+        name: "⥼Fan count⥽",
+        value: `⤷ ${info.fan_count}`,
+        inline: true,
+      },
+      {
+        name: "⥼Followers count⥽",
+        value: `⤷ ${info.followers_count}`,
+        inline: true,
+      },
+    );

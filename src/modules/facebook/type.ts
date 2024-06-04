@@ -16,3 +16,12 @@ export const enum UnpublishedContentType {
   PUBLISHED,
   REVIEWABLE_BRANDED_CONTENT,
 }
+
+export type PageInfoResponse = {
+  fan_count: number;
+  followers_count: number;
+  link: string;
+  name: string;
+  id: string;
+  username?: string;
+};
