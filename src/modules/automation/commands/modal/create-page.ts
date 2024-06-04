@@ -31,10 +31,12 @@ export const command: ModalSubmit = {
       time: 360_000,
     });
     collector.on("end", async (collection) => {
-      if (!collection.hasAny())
-        await interaction.editReply(
-          "This session is ended, please start a new one!",
-        );
+      if (!collection.first())
+        await interaction.editReply({
+          content: "This session is ended, please start a new one!",
+          embeds: [],
+          components: [],
+        });
       else {
         try {
           await Page.create(pageInfo);
