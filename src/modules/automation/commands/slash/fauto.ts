@@ -64,7 +64,6 @@ export const command: SlashCommand = {
         return;
       }
       await FAutoSelect.handle(CollectOption);
-      console.log(CollectOption);
     });
   },
 };
