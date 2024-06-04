@@ -22,6 +22,7 @@ export default async (client: FClient) => {
       const { command } = await import(
         `@modules/${folder.name}/commands/menu/${file.name}`
       );
+      if (!command || !command.builder) continue;
       client.commands?.menu.set(command.builder.data.custom_id, command);
       logger.info(`*** ${command.builder.data.custom_id}`);
     }

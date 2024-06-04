@@ -56,3 +56,10 @@ export interface StringSelectMenu extends SelectMenu {
     client?: FClient,
   ) => Promise<InteractionResponse<T> | InteractionUpdateOptions<T> | void>;
 }
+
+export interface PartialStringSelectMenu {
+  execute: (
+    interaction: StringSelectMenuInteraction,
+    client?: FClient,
+  ) => Promise<InteractionResponse<T> | InteractionUpdateOptions<T> | void>;
+}

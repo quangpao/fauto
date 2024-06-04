@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import type { Page, PostType } from "@prisma/client";
 import type { Colors } from "./constant";
+import type { StringSelectMenuInteraction } from "discord.js";
 
 export type PostPreviewEmbedType = {
   title: string;
@@ -27,20 +28,26 @@ export type PostImageType = {
   scheduledPublishTime: number;
 };
 
-export const enum AdminOption {
+export enum AdminOption {
   None = "0x000",
-  Channel = "0x001",
-  User = "0x002",
-  Page = "0x003",
+  Channel = "1x000",
+  User = "2x000",
+  Page = "3x000",
 }
 
-export const enum AdminAction {
-  None = "1x000",
-  Create = "1x001",
-  Update = "1x002",
-  Delete = "1x003",
-  List = "1x004",
+export enum AdminAction {
+  None = "0x00f",
+  Create = "0x001",
+  Update = "0x002",
+  Delete = "0x003",
+  List = "0x004",
 }
+
+export type CollectOption = {
+  option: AdminOption;
+  action: AdminAction;
+  interaction: StringSelectMenuInteraction;
+};
 
 export function isPostPreviewEmbedType(p: any): p is PostPreviewEmbedType {
   return (
@@ -70,4 +77,12 @@ export function isUpdatePostPreviewEmbedType(
     (p.color === undefined || typeof p.color === "string") &&
     (p.time === undefined || typeof p.time === "string")
   );
+}
+
+export function isAdminOption(p: any): p is AdminOption {
+  return Object.values(AdminOption).includes(p as AdminOption);
+}
+
+export function isAdminAction(p: any): p is AdminAction {
+  return Object.values(AdminAction).includes(p as AdminAction);
 }
