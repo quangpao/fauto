@@ -8,14 +8,12 @@ import {
   PostButton,
   ScheduleButton,
   SkipCaptionButton,
+  SubmitCreatePageButton,
 } from "./button";
 import {
   CaptionTxtInput,
   CreditTxtInput,
   PageApiKeyTxtInput,
-  PageIdTxtInput,
-  PageNameTxtInput,
-  PageUsernameTxtInput,
 } from "./text-input";
 import {
   AdminActionSelectMenu,
@@ -54,6 +52,10 @@ export const CaptionRow = new ActionRowBuilder<Me>().addComponents(
   SkipCaptionButton,
 );
 
+export const CreatePageActionRow = new ActionRowBuilder<Me>().addComponents(
+  SubmitCreatePageButton,
+);
+
 /** ⟾ Text Input Action Row ⟽ **/
 
 export const CaptionActionRow = new ActionRowBuilder<Mo>().addComponents(
@@ -63,15 +65,6 @@ export const CreditActionRow = new ActionRowBuilder<Mo>().addComponents(
   CreditTxtInput,
 );
 
-export const PageIdActionRow = new ActionRowBuilder<Mo>().addComponents(
-  PageIdTxtInput,
-);
-export const PageNameActionRow = new ActionRowBuilder<Mo>().addComponents(
-  PageNameTxtInput,
-);
-export const PageUsernameActionRow = new ActionRowBuilder<Mo>().addComponents(
-  PageUsernameTxtInput,
-);
 export const PageApiKeyActionRow = new ActionRowBuilder<Mo>().addComponents(
   PageApiKeyTxtInput,
 );

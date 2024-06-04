@@ -9,6 +9,7 @@ import type { PostImageType } from "./type";
 import Post from "@modules/prisma/post";
 import got from "got";
 import sharp from "sharp";
+import type { ApiKeyWithPage } from "@modules/prisma/type";
 
 export default class AutoService {
   public fApis: Collection<string, FApi> = new Collection<string, FApi>();
@@ -16,12 +17,22 @@ export default class AutoService {
 
   public async init() {
     const apiKeys = await ApiKey.getAll();
+    const pages: Page[] = [];
 
     for (const apiKey of apiKeys) {
       const fApi = new FApi(apiKey);
       this.fApis.set(fApi.page.pageId, fApi);
-      this.pages.push(apiKey.page);
+      pages.push(apiKey.page);
     }
+    this.pages = pages;
+  }
+
+  public addApi(apiKey: ApiKeyWithPage) {
+    if (this.fApis.get(apiKey.page.pageId))
+      throw new Error("This page is already existed.");
+    const fApi = new FApi(apiKey);
+    this.fApis.set(fApi.page.pageId, fApi);
+    this.pages.push(apiKey.page);
   }
 
   public async verifyInput(message: Message<boolean>) {

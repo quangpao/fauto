@@ -19,3 +19,8 @@ export const SkipCaptionButton = new ButtonBuilder()
   .setCustomId("skipCaptionButton")
   .setLabel("Skip Caption")
   .setStyle(ButtonStyle.Danger);
+
+export const SubmitCreatePageButton = new ButtonBuilder()
+  .setCustomId("submitCreatePageButton")
+  .setLabel("Create Page")
+  .setStyle(ButtonStyle.Success);

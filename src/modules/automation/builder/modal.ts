@@ -1,12 +1,5 @@
 import { ModalBuilder } from "discord.js";
-import {
-  CaptionActionRow,
-  CreditActionRow,
-  PageApiKeyActionRow,
-  PageIdActionRow,
-  PageNameActionRow,
-  PageUsernameActionRow,
-} from ".";
+import { CaptionActionRow, CreditActionRow, PageApiKeyActionRow } from ".";
 
 export const PostImageModal = new ModalBuilder()
   .setCustomId("postImageModal")
@@ -16,9 +9,4 @@ export const PostImageModal = new ModalBuilder()
 export const CreatePageModal = new ModalBuilder()
   .setCustomId("createPageModal")
   .setTitle("FAuto - Create Page")
-  .addComponents(
-    PageIdActionRow,
-    PageNameActionRow,
-    PageUsernameActionRow,
-    PageApiKeyActionRow,
-  );
+  .addComponents(PageApiKeyActionRow);

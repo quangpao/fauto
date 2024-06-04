@@ -1,6 +1,6 @@
 import adsSdk, { HttpMethod } from "facebook-nodejs-business-sdk";
 import { feedsParams, meParams, photoParams, postPhotoParams } from "./param";
-import type { PostPhotoParam } from "./type";
+import type { PageInfoResponse, PostPhotoParam } from "./type";
 import type { ApiKeyWithPage } from "@modules/prisma/type";
 import type { Page } from "@prisma/client";
 export default class FApi {
@@ -13,10 +13,21 @@ export default class FApi {
     this.api = adsSdk.FacebookAdsApi.init(apiKey.key);
   }
 
-  public async info() {
+  public async info(): Promise<PageInfoResponse | null> {
     const response = await this.api.call(HttpMethod.GET, ["me"], meParams);
 
     return response;
+  }
+
+  public static async info(apiKey: string): Promise<PageInfoResponse | null> {
+    try {
+      const api = adsSdk.FacebookAdsApi.init(apiKey);
+      const response = await api.call(HttpMethod.GET, ["me"], meParams);
+
+      return response;
+    } catch (_) {
+      return null;
+    }
   }
 
   public async getFeeds() {
