@@ -98,14 +98,22 @@ export class FClient extends Client {
       )
         return;
 
-      await this.autoService.verifyInput(message);
-      logger.info("[FEvents] Triggered |messageCreate| event");
+      try {
+        await this.autoService.verifyInput(message);
+        logger.info("[FEvents] Triggered |messageCreate| event");
+      } catch (error) {
+        logger.error("An unexpected error happened", error);
+      }
     });
   }
 
   private interactionCreate() {
     this.on("interactionCreate", async (interaction) => {
-      await FInteraction.execute(this, interaction);
+      try {
+        await FInteraction.execute(this, interaction);
+      } catch (error) {
+        logger.error("An unexpected error happened", error);
+      }
     });
   }
 }

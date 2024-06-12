@@ -66,7 +66,7 @@ export class FAutoSelect {
   }
 
   private static async defaultFallback(interaction: SSMInteraction) {
-    return await interaction.editReply({
+    return await interaction.reply({
       content: "This operation is not supported yet.",
       embeds: [],
       components: [],
