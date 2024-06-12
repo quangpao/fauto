@@ -58,7 +58,8 @@ export const command: SlashCommand = {
     collector.on("end", async () => {
       if (
         CollectOption.action === AdminAction.None ||
-        CollectOption.option === AdminOption.None
+        CollectOption.option === AdminOption.None ||
+        !CollectOption.interaction
       ) {
         await interaction.editReply({ components: [] });
         return;
