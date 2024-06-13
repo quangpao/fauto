@@ -74,6 +74,7 @@ export default class AutoService {
       postType: params.postType,
       scheduled: params.scheduledPublishTime,
       pageId: params.pageId,
+      idealScheduled: params.idealScheduled,
     });
   }
 

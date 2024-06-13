@@ -11,4 +11,5 @@ export type PostSchema = {
   postType: PostType;
   scheduled: number;
   pageId: string;
+  idealScheduled: number;
 };

@@ -5,6 +5,7 @@ import { extractEmbed } from "@shared/utils";
 
 export const command: StringSelectMenu = {
   builder: ScheduleSelectMenu(),
+
   async execute(interaction, client) {
     const oldEmbed = interaction.message.embeds[0];
     const extracted = extractEmbed(oldEmbed);
@@ -22,6 +23,7 @@ export const command: StringSelectMenu = {
       published: false,
       url: oldEmbed.image?.url as string,
       scheduledPublishTime: Math.floor(+scheduled),
+      idealScheduled: -1,
     })) as Post;
 
     return await interaction.editReply({

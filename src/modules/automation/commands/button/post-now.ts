@@ -24,6 +24,7 @@ export const command: ButtonCommand = {
       published: true,
       url: oldEmbed.image?.url as string,
       scheduledPublishTime: DateTime.now().toSeconds(),
+      idealScheduled: -1,
     })) as Post;
 
     return await interaction.editReply({
