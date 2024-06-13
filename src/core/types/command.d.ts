@@ -26,7 +26,7 @@ export interface ButtonCommand extends Command {
 }
 
 export interface SlashCommand extends Command {
-  builder: SlashCommandBuilder;
+  builder: Omit<SlashCommandBuilder, "addSubcommand" | "addSubcommandGroup">;
   execute: (
     interaction: ChatInputCommandInteraction,
     client?: FClient,
