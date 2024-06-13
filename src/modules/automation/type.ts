@@ -26,6 +26,7 @@ export type PostImageType = {
   published: boolean;
   postType: PostType;
   scheduledPublishTime: number;
+  idealScheduled: number;
 };
 
 export enum AdminOption {

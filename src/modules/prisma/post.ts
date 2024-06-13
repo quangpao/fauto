@@ -19,6 +19,7 @@ export default class Post {
         postType: data.postType,
         scheduled: data.scheduled,
         pageId: data.pageId,
+        idealScheduled: data.idealScheduled,
       },
     });
   }
