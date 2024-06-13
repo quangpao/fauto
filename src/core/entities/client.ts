@@ -7,17 +7,21 @@ import {
 } from "discord.js";
 import AutoService from "@modules/automation/service";
 import type { ListenerChannel } from "@prisma/client";
-import type { ListenerChannels } from "@core/types";
+import type { FOptions, ListenerChannels } from "@core/types";
 import Channel from "@modules/prisma/channel";
 import { FInteraction } from "./interaction";
 import { config } from "@config/config";
 import { logger } from "@shared/logger";
 import FCommands from "./command";
+import fs from "node:fs";
+import YAML from "yaml";
+import { DefaultFOptions } from "@core/constants";
 
 export class FClient extends Client {
   public commands: FCommands;
   public autoService: AutoService;
   public lChannels: ListenerChannels;
+  public fOptions: FOptions;
 
   constructor() {
     super({
@@ -41,9 +45,13 @@ export class FClient extends Client {
       ids: [],
       collection: new Collection<string, ListenerChannel>(),
     };
+    this.fOptions = {
+      autoSchedule: false,
+    };
   }
 
   public async start() {
+    this.initOptions();
     await this.initEvents();
     await this.initCommands();
     await this.initChannels();
@@ -76,6 +84,34 @@ export class FClient extends Client {
     for (const channel of channels) {
       this.lChannels.collection.set(channel.channelId, channel);
     }
+  }
+
+  private initOptions() {
+    if (fs.existsSync("config.yml")) {
+      logger.info("[FOptions] Loading config.yml file...");
+
+      const configFile = fs.readFileSync("config.yml", "utf-8");
+      this.fOptions = YAML.parse(configFile);
+    } else {
+      logger.warn("[FOptions] config.yml file not found. Creating...");
+
+      this.fOptions = DefaultFOptions;
+      const configString = YAML.stringify(DefaultFOptions);
+      fs.writeFileSync("config.yml", configString, "utf-8");
+
+      logger.info("[FOptions] Create config.yml file successfully.");
+    }
+  }
+
+  public updateOptions(options: Partial<FOptions>) {
+    this.fOptions = {
+      ...this.fOptions,
+      ...options,
+    };
+
+    const configString = YAML.stringify(this.fOptions);
+    fs.writeFileSync("config.yml", configString, "utf-8");
+    logger.info("[FOptions] Update config.yml file successfully.");
   }
 
   private onReady() {
