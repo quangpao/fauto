@@ -13,5 +13,11 @@
   ],
   "draftPR": true,
   "branchPrefix": "dependencies/",
-  "timezone": "Asia/Ho_Chi_Minh"
+  "timezone": "Asia/Ho_Chi_Minh",
+  "enabledManagers": [
+    "bun",
+    "docker-compose",
+    "dockerfile",
+    "github-actions"
+  ]
 }
