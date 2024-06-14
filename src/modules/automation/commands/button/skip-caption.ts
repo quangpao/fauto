@@ -27,7 +27,7 @@ export const command: ButtonCommand = {
       });
 
       const latestPost = await Post.getLatest(extracted["id"]);
-      let currentTime = DateTime.now();
+      let currentTime = DateTime.now().setZone(TZ);
       let oldIdealSchedule: number = latestPost?.idealScheduled || -1;
       let idealSchedule: number;
       let actualSchedule: number;
