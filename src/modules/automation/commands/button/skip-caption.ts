@@ -1,3 +1,4 @@
+import { TZ } from "@core/constants";
 import type { ButtonCommand } from "@core/types";
 import {
   PostDoneEmbed,
@@ -31,7 +32,9 @@ export const command: ButtonCommand = {
       let idealSchedule: number;
       let actualSchedule: number;
       if (latestPost && latestPost.scheduled >= currentTime.toSeconds()) {
-        const oldScheduled = DateTime.fromSeconds(latestPost.scheduled);
+        const oldScheduled = DateTime.fromSeconds(latestPost.scheduled).setZone(
+          TZ,
+        );
         if (oldIdealSchedule === -1) {
           if (oldScheduled.hour < 11) {
             oldIdealSchedule = 2;
@@ -58,10 +61,11 @@ export const command: ButtonCommand = {
         } else {
           oldIdealSchedule = 1;
         }
-        idealSchedule = (oldIdealSchedule + 1) % 3;
+        const fakeIdealSchedule = (oldIdealSchedule + 1) % 3;
+        idealSchedule = oldIdealSchedule;
         actualSchedule = currentTime
           .set({
-            hour: 7 + 4 * (idealSchedule + (oldIdealSchedule % 2)),
+            hour: 7 + 4 * (fakeIdealSchedule + (oldIdealSchedule % 2)),
             minute: 0,
             second: 0,
           })

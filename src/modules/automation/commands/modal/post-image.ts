@@ -1,3 +1,4 @@
+import { TZ } from "@core/constants";
 import type { ModalSubmit } from "@core/types";
 import {
   PostDoneEmbed,
@@ -33,7 +34,9 @@ export const command: ModalSubmit = {
       let idealSchedule: number;
       let actualSchedule: number;
       if (latestPost && latestPost.scheduled >= currentTime.toSeconds()) {
-        const oldScheduled = DateTime.fromSeconds(latestPost.scheduled);
+        const oldScheduled = DateTime.fromSeconds(latestPost.scheduled).setZone(
+          TZ,
+        );
         if (oldIdealSchedule === -1) {
           if (oldScheduled.hour < 11) {
             oldIdealSchedule = 2;
