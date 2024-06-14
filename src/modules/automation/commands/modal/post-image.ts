@@ -60,10 +60,11 @@ export const command: ModalSubmit = {
         } else {
           oldIdealSchedule = 1;
         }
-        idealSchedule = (oldIdealSchedule + 1) % 3;
+        const fakeIdealSchedule = (oldIdealSchedule + 1) % 3;
+        idealSchedule = oldIdealSchedule;
         actualSchedule = currentTime
           .set({
-            hour: 7 + 4 * (idealSchedule + (oldIdealSchedule % 2)),
+            hour: 7 + 4 * (fakeIdealSchedule + (oldIdealSchedule % 2)),
             minute: 0,
             second: 0,
           })
