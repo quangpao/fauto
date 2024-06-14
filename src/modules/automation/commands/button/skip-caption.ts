@@ -78,7 +78,7 @@ export const command: ButtonCommand = {
         pageId: extracted["id"],
         caption: caption,
         postType: extracted["postType"].toUpperCase(),
-        published: true,
+        published: false,
         url: oldEmbed.image?.url as string,
         scheduledPublishTime: actualSchedule,
         idealScheduled: idealSchedule,
