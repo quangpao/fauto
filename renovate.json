@@ -11,7 +11,7 @@
   "schedule": [
     "* 23 * * 0"
   ],
-  "draftPR": true,
+  "rangeStrategy": "bump",
   "branchPrefix": "dependencies/",
   "timezone": "Asia/Ho_Chi_Minh",
   "enabledManagers": [
