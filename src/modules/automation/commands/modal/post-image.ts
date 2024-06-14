@@ -82,7 +82,7 @@ export const command: ModalSubmit = {
         postType: extracted["postType"].toUpperCase(),
         published: false,
         url: oldEmbed.image?.url as string,
-        scheduledPublishTime: actualSchedule,
+        scheduledPublishTime: Math.floor(+actualSchedule),
         idealScheduled: idealSchedule,
       });
 
