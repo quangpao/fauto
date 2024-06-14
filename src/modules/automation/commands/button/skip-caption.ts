@@ -80,7 +80,7 @@ export const command: ButtonCommand = {
         postType: extracted["postType"].toUpperCase(),
         published: false,
         url: oldEmbed.image?.url as string,
-        scheduledPublishTime: actualSchedule,
+        scheduledPublishTime: Math.floor(+actualSchedule),
         idealScheduled: idealSchedule,
       });
 
