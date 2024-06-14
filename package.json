@@ -4,6 +4,7 @@
   "type": "module",
   "scripts": {
     "dev": "bun --watch src/app.ts",
+    "production": "bun src/app.ts",
     "ci": "npx eslint .",
     "lint": "npx eslint . --fix",
     "test": "NODE_ENV=test bun test"

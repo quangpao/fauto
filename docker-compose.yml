@@ -6,7 +6,7 @@ services:
     build:
       context: .
       dockerfile: .docker/Dockerfile
-    command: bun dev
+    command: bun production
     volumes:
       - .:/app
       - /app/node_modules
