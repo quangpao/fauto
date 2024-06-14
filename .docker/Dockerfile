@@ -1,4 +1,4 @@
-FROM imbios/bun-node:latest-20-slim as builder
+FROM imbios/bun-node:1.1.12-20-slim as builder
 WORKDIR /app
 COPY package.json bun.lockb tsconfig.json ./
 RUN bun install
@@ -9,7 +9,7 @@ RUN bun install --production
 RUN bun pm cache rm 
 
 
-FROM oven/bun:slim
+FROM oven/bun:1.1.12-slim
 WORKDIR /app
 
 COPY --from=builder /app/node_modules ./node_modules
