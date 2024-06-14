@@ -2,5 +2,16 @@
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
     "config:recommended"
-  ]
+  ],
+  "labels": [
+    "Dependencies",
+    "Auto"
+  ],
+  "rebaseWhen": "auto",
+  "schedule": [
+    "30 23 * * 0"
+  ],
+  "draftPR": true,
+  "branchPrefix": "dependencies/",
+  "timezone": "Asia/Ho_Chi_Minh"
 }
