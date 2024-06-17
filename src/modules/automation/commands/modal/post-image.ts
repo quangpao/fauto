@@ -50,7 +50,7 @@ export const command: ModalSubmit = {
         actualSchedule = oldScheduled
           .set({ minute: 0, second: 0 })
           .plus({ hours: 4 * (idealSchedule + 1) })
-          .plus({ seconds: Math.floor(Math.random() * 3600) })
+          .plus({ seconds: Math.floor(Math.random() * 3599) })
           .toSeconds();
       } else {
         currentTime = currentTime.plus({ minutes: 20 });
@@ -72,7 +72,7 @@ export const command: ModalSubmit = {
             second: 0,
           })
           .plus({ days: isNewDay ? 1 : 0 })
-          .plus({ seconds: Math.floor(Math.random() * 3600) })
+          .plus({ seconds: Math.floor(Math.random() * 3599) })
           .toSeconds();
       }
 
