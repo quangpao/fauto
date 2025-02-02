@@ -1,4 +1,4 @@
-FROM imbios/bun-node:1.1.12-20-slim as builder
+FROM imbios/bun-node:1.2.2-20-slim as builder
 WORKDIR /app
 COPY package.json bun.lockb tsconfig.json ./
 RUN bun install
