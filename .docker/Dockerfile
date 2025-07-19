@@ -9,7 +9,7 @@ RUN bun install --production
 RUN bun pm cache rm 
 
 
-FROM oven/bun:1.1.12-slim
+FROM oven/bun:1.2.19-slim
 WORKDIR /app
 
 COPY --from=builder /app/node_modules ./node_modules
